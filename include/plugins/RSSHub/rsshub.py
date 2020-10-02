@@ -81,11 +81,27 @@ async def getRSS(rss:RSS_class.rss)->list:# 链接，订阅名
                             # 处理item['summary']只有图片的情况
                             text = re.sub('<video.+?><\/video>|<img.+?>', '', item['summary'])
                             text = re.sub('<br>', '', text)
-                            Similarity = difflib.SequenceMatcher(None, text, item['title'])
+                            #Similarity = difflib.SequenceMatcher(None, text, item['title'])
                             # print(Similarity.quick_ratio())
-                            if Similarity.quick_ratio() <= 0.1:  # 标题正文相似度
-                                msg = msg + '标题：' + item['title'] + '\n'
-                            msg = msg + '内容：' + await checkstr(item['summary'], rss.img_proxy, rss.translation) + '\n'
+                            #if Similarity.quick_ratio() <= 0.1:  # 标题正文相似度
+                            msg = msg + '标题：' + item['title'] + '\n'
+                            msg = msg + '内容：' + (await checkstr(item['summary'], rss.img_proxy, rss.translation)).replace("作者："," , 作者：") + '\n'
+                            '''
+                                https://www.runoob.com/python/att-string-replace.html
+                                描述
+                                    Python replace() 方法把字符串中的 old（旧字符串） 替换成 new(新字符串)，如果指定第三个参数max，则替换不超过 max 次。
+                                语法
+                                    replace()方法语法：
+                                    str.replace(old, new[, max])
+                                参数
+                                    old -- 将被替换的子字符串。
+                                    new -- 新字符串，用于替换old子字符串。
+                                    max -- 可选字符串, 替换不超过 max 次
+                                返回值
+                                    返回字符串中的 old（旧字符串） 替换成 new(新字符串)后生成的新字符串，如果指定第三个参数max，则替换不超过 max 次。
+                            '''
+                            #else:
+                            #    msg = msg + '标题/内容：' + (await checkstr(item['summary'], rss.img_proxy, rss.translation)).replace("作者："," , 作者：") + '\n'
                         else:
                             msg = msg + '标题：' + item['title'] + '\n'
                         str_link = re.sub('member_illust.php\?mode=medium&illust_id=', 'i/', item['link'])
