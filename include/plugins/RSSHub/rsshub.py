@@ -109,9 +109,9 @@ async def getRSS(rss:RSS_class.rss)->list:# 链接，订阅名
                         # msg = msg + '原链接：' + item['link'] + '\n'
                         try:
                             loc_time = time.mktime(item['published_parsed'])
-                            msg = msg + '日期：' + time.strftime("%Y{}%m{}%d{} %H:%M:%S",time.localtime(loc_time + 28800.0)).format('年','月', '日')
+                            msg = msg + '最后更新日期：' + time.strftime("%Y{}%m{}%d{} %H:%M:%S",time.localtime(loc_time + 28800.0)).format('年','月', '日')
                         except BaseException:
-                            msg = msg + '日期：' + time.strftime("%Y{}%m{}%d{} %H:%M:%S", time.localtime()).format('年','月', '日')
+                            msg = msg + '最后更新日期：' + time.strftime("%Y{}%m{}%d{} %H:%M:%S", time.localtime()).format('年','月', '日')
                         # print(msg+'\n\n\n')
                         await sendMsg(rss, msg, bot)
                         # msg_list.append(msg)
